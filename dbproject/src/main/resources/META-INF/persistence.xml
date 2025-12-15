@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             version="2.2"
+             xsi:schemaLocation="
+               http://xmlns.jcp.org/xml/ns/persistence
+               http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+
+  <persistence-unit name="dbprojectPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+    <!-- Entities -->
+    <class>com.example.domain.User</class>
+    <!-- <class>com.example.domain.AuditableEntity</class> -->
+    <class>com.example.domain.Branch</class>
+    <class>com.example.domain.Department</class>
+    <class>com.example.domain.SimulatorModel</class>
+    <class>com.example.domain.Simulator</class>
+    <class>com.example.domain.Maintenance</class>
+    <class>com.example.domain.Maintained</class>
+    <class>com.example.domain.Borrowing</class>
+    <class>com.example.domain.BorrowSim</class>
+    <class>com.example.domain.Consumable</class>
+    <class>com.example.domain.Stock</class>
+    <class>com.example.domain.BorrowCons</class>
+
+    <properties>
+      <!-- DB connection -->
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.url"
+                value="jdbc:mysql://192.168.56.101:3306/dbproject?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC"/>
+      <property name="javax.persistence.jdbc.user" value="dbsys1"/>
+      <property name="javax.persistence.jdbc.password" value="dbsys1"/>
+
+      <!-- Hibernate -->
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+      <property name="hibernate.hbm2ddl.auto" value="validate"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+    </properties>
+  </persistence-unit>
+</persistence>

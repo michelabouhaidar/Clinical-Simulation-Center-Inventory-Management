@@ -1,0 +1,103 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.example</groupId>
+  <artifactId>dbproject</artifactId>
+  <version>1.0.0</version>
+  <name>dbproject</name>
+  <packaging>jar</packaging>
+
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javafx.version>21.0.3</javafx.version>
+    <hibernate.version>5.6.15.Final</hibernate.version>
+  </properties>
+
+  <dependencies>
+    <!-- JPA API -->
+    <dependency>
+      <groupId>javax.persistence</groupId>
+      <artifactId>javax.persistence-api</artifactId>
+      <version>2.2</version>
+    </dependency>
+
+    <!-- Hibernate -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
+
+    <!-- MySQL driver -->
+    <dependency>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <version>9.1.0</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- JavaFX (controls + fxml + graphics) -->
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-graphics</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+
+    <!-- BCrypt -->
+    <dependency>
+      <groupId>org.mindrot</groupId>
+      <artifactId>jbcrypt</artifactId>
+      <version>0.4</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Java 17 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <release>${maven.compiler.release}</release>
+        </configuration>
+      </plugin>
+
+      <!-- JavaFX run plugin (this is what provides the 'javafx:run' goal) -->
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+          <!-- Your JavaFX Application class -->
+          <mainClass>com.example.app.MainApp</mainClass>
+          <!-- tell the launcher which JavaFX modules to enable -->
+          <addModules>javafx.controls,javafx.fxml,javafx.graphics</addModules>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <!-- Optional profile name 'ui' so you can run: mvn -Pui javafx:run -->
+  <profiles>
+    <profile>
+      <id>ui</id>
+      <properties>
+        <exec.mainClass>com.example.ui.MainApp</exec.mainClass>
+      </properties>
+    </profile>
+  </profiles>
+</project>

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.ui.StockController"
+            prefWidth="1200" prefHeight="750"
+            style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
+
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              spacing="10"
+              style="-fx-padding: 16 32 16 32;">
+            <children>
+                <Label text="LAU"
+                       style="-fx-text-fill: #f9fafb;
+                              -fx-font-size: 22px;
+                              -fx-font-weight: bold;"/>
+
+                <Label text="· Clinical Simulator Center Inventory Management"
+                       style="-fx-text-fill: #d1fae5;
+                              -fx-font-size: 13px;"/>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <Label fx:id="userLabel"
+                       text="Logged in user"
+                       style="-fx-text-fill: #f9fafb;
+                              -fx-font-size: 12px;"/>
+            </children>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox spacing="8"
+              style="-fx-background-color: #14532d;
+                     -fx-padding: 24 14 24 24;">
+            <children>
+                <Label text="Navigation"
+                       style="-fx-text-fill: #e5e7eb;
+                              -fx-font-size: 12px;
+                              -fx-font-weight: bold;
+                              -fx-padding: 0 0 8 0;"/>
+
+                <Button text="Overview"
+                        onAction="#onNavOverview"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: #f9fafb;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-padding: 8 12 8 12;"/>
+
+                <Button text="Simulators"
+                        onAction="#onNavSimulators"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: #ecfdf5;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-padding: 8 14 8 14;"/>
+
+                <Button text="Consumables &amp; Stock"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: rgba(0,0,0,0.22);
+                               -fx-text-fill: #f9fafb;
+                               -fx-font-weight: bold;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-background-radius: 999;
+                               -fx-padding: 8 12 8 12;"/>
+
+                <Button text="Borrowing"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: #f9fafb;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-padding: 8 12 8 12;"/>
+
+                <Button text="Maintenance"
+                        maxWidth="Infinity"
+                        onAction="#onNavMaintentance"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: #f9fafb;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-padding: 8 12 8 12;"/>
+
+                <Button text="Users"
+                        maxWidth="Infinity"
+                        onAction="#onNavUsers"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: #f9fafb;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-padding: 8 12 8 12;"/>
+
+                <!-- ✅ fixed here -->
+                <Separator style="-fx-opacity: 0.4; -fx-padding: 8 0 8 0;"/>
+
+                <Button text="Settings"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: #f9fafb;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-padding: 8 12 8 12;"/>
+
+                <Pane VBox.vgrow="ALWAYS"/>
+
+                <Button text="Logout"
+                        onAction="#onLogout"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: #ef4444;
+                               -fx-text-fill: white;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 999;
+                               -fx-padding: 8 12 8 12;"/>
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <!-- <ScrollPane fitToWidth="true" fitToHeight="true"
+                    style="-fx-background-color: transparent;
+                           -fx-padding: 8 24 24 8;">
+            <content> -->
+                <StackPane>
+                    <padding>
+                        <Insets top="8" right="8" bottom="8" left="8"/>
+                    </padding>
+                    <children>
+                        <VBox spacing="16"
+							  maxWidth="1400"
+                              style="-fx-background-color: #f9fafb;
+                                     -fx-background-radius: 20;
+                                     -fx-padding: 24;
+                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.24), 22, 0.21, 0, 4);">
+
+                            <VBox spacing="4">
+                                <Label text="Consumables &amp; Stock"
+                                       style="-fx-text-fill: #111827;
+                                              -fx-font-size: 22px;
+                                              -fx-font-weight: bold;"/>
+                            </VBox>
+
+                            <HBox spacing="10">
+                                <TextField fx:id="searchField"
+                                           promptText="Search by consumable, measure, branch, quantities, date..."
+                                           HBox.hgrow="ALWAYS"
+                                           style="-fx-background-radius: 999;
+                                                  -fx-border-radius: 999;
+                                                  -fx-border-color: #d1d5db;
+                                                  -fx-padding: 6 12 6 12;
+                                                  -fx-background-color: #ffffff;"/>
+
+                                <ComboBox fx:id="sortByCombo"
+                                          prefWidth="180"
+                                          promptText="Sort by"
+                                          style="-fx-background-radius: 999;
+                                                 -fx-border-radius: 999;
+                                                 -fx-border-color: #d1d5db;
+                                                 -fx-padding: 4 10 4 10;
+                                                 -fx-background-color: #ffffff;"/>
+                            </HBox>
+
+                            <HBox spacing="16">
+
+                                <TableView fx:id="stockTable"
+                                           prefHeight="480"
+                                           HBox.hgrow="ALWAYS"
+                                           style="-fx-background-color: transparent;
+                                                  -fx-control-inner-background: #ffffff;
+                                                  -fx-table-cell-border-color: #e5e7eb;
+                                                  -fx-table-header-border-color: #e5e7eb;">
+                                    <columns>
+                                        <TableColumn fx:id="consColumn"
+                                                     text="Consumable"
+                                                     prefWidth="280"/>
+                                        <TableColumn fx:id="measureColumn"
+                                                     text="Measure"
+                                                     prefWidth="80"/>
+                                        <TableColumn fx:id="branchColumn"
+                                                     text="Branch"
+                                                     prefWidth="130"/>
+                                        <TableColumn fx:id="availColumn"
+                                                     text="Available"
+                                                     prefWidth="80"/>
+                                        <TableColumn fx:id="resColumn"
+                                                     text="Reserved"
+                                                     prefWidth="80"/>
+                                        <TableColumn fx:id="lastCountCol"
+                                                     text="Last count"
+                                                     prefWidth="120"/>
+                                    </columns>
+                                </TableView>
+
+                                <VBox spacing="12"
+                                      prefWidth="260"
+                                      style="-fx-background-color: #ffffff;
+                                             -fx-background-radius: 14;
+                                             -fx-padding: 16;
+                                             -fx-border-color: #e5e7eb;
+                                             -fx-border-radius: 14;">
+
+                                    <Label text="Actions"
+                                           style="-fx-text-fill: #111827;
+                                                  -fx-font-size: 16px;
+                                                  -fx-font-weight: bold;"/>
+
+                                    <Separator/>
+
+                                    <Label text="Stock operations"
+                                           style="-fx-text-fill: #111827;
+                                                  -fx-font-size: 14px;
+                                                  -fx-font-weight: bold;"/>
+
+                                    <Button text="Top up"
+									        onAction="#onTopUpStock"
+									        maxWidth="Infinity"
+									        style="-fx-background-color: #22c55e;
+									               -fx-text-fill: white;
+									               -fx-font-weight: bold;
+									               -fx-background-radius: 999;
+									               -fx-padding: 8 12 8 12;"/>
+
+									<Button text="Top up reserved"
+									        onAction="#onTopUpReserved"
+									        maxWidth="Infinity"
+									        style="-fx-background-color: #22c55e;
+									               -fx-text-fill: white;
+									               -fx-font-weight: bold;
+									               -fx-background-radius: 999;
+									               -fx-padding: 8 12 8 12;"/>
+
+									<Button text="Top up from reserved"
+									        onAction="#onTopUpFromReserved"
+									        maxWidth="Infinity"
+									        style="-fx-background-color: #22c55e;
+									               -fx-text-fill: white;
+									               -fx-font-weight: bold;
+									               -fx-background-radius: 999;
+									               -fx-padding: 8 12 8 12;"/>
+									
+									<Separator/>
+
+									<Label text="New Stock &amp; Consumables"
+                                           style="-fx-text-fill: #111827;
+                                                  -fx-font-size: 14px;
+                                                  -fx-font-weight: bold;"/>
+
+                                    <Button text="Add consumable"
+                                            onAction="#onAddConsumable"
+                                            maxWidth="Infinity"
+                                            style="-fx-background-color: #22c55e;
+                                                   -fx-text-fill: white;
+                                                   -fx-font-weight: bold;
+                                                   -fx-background-radius: 999;
+                                                   -fx-padding: 8 12 8 12;"/>
+
+                                    <Button text="Add stock row"
+                                            onAction="#onAddStock"
+                                            maxWidth="Infinity"
+                                            style="-fx-background-color: #22c55e;
+                                                   -fx-text-fill: white;
+                                                   -fx-font-weight: bold;
+                                                   -fx-background-radius: 999;
+                                                   -fx-padding: 8 12 8 12;"/>
+
+                                </VBox>
+                            </HBox>
+
+                            <Label fx:id="infoLabel"
+                                   textFill="red"
+                                   wrapText="true"
+                                   maxWidth="Infinity"/>
+                        </VBox>
+                    </children>
+                </StackPane>
+            <!-- </content>
+        </ScrollPane> -->
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT"
+              style="-fx-padding: 4 24 8 24;">
+            <children>
+                <Label text="LAU · Clinical Simulator Center Inventory"
+                       style="-fx-text-fill: #e5e7eb; -fx-font-size: 11px;"/>
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>
