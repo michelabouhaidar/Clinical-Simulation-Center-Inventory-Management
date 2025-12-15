@@ -417,6 +417,7 @@ public class SettingsController {
         }
     }
 
+	
     @FXML
     private void onNavBorrowing(ActionEvent event) {
         try {

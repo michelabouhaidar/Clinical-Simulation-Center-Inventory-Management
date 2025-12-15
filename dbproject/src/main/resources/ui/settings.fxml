@@ -70,14 +70,14 @@
                                -fx-text-fill: #f9fafb;
                                -fx-alignment: CENTER_LEFT;
                                -fx-padding: 8 12 8 12;"/>
-
+							   
                 <Button text="Borrowing"
-                        onAction="#onNavBorrowing"
-                        maxWidth="Infinity"
-                        style="-fx-background-color: transparent;
-                               -fx-text-fill: #f9fafb;
-                               -fx-alignment: CENTER_LEFT;
-                               -fx-padding: 8 12 8 12;"/>
+				        onAction="#onNavBorrowing"
+				        maxWidth="Infinity"
+				        style="-fx-background-color: transparent;
+				               -fx-text-fill: #f9fafb;
+				               -fx-alignment: CENTER_LEFT;
+				               -fx-padding: 8 12 8 12;"/>
 
                 <Button text="Maintenance"
                         onAction="#onNavMaintentance"

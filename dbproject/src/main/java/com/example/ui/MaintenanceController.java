@@ -794,6 +794,11 @@ public class MaintenanceController {
     }
 
 	@FXML
+	private void onNavBorrowing(ActionEvent event) {
+	    ViewUtil.switchScene(event, "/ui/borrowing.fxml", "Borrowing");
+	}
+	
+	@FXML
 	private void onNavUsers(ActionEvent event) {
 	    LoggedInUser u = AppSession.getCurrentUser();
 	    if (u == null || u.getRole() == null || !u.getRole().equalsIgnoreCase("ADMIN")) {

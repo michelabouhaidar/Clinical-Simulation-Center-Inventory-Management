@@ -953,6 +953,11 @@ public class StockController {
             e.printStackTrace();
         }
     }
+	@FXML
+	private void onNavBorrowing(ActionEvent event) {
+	    ViewUtil.switchScene(event, "/ui/borrowing.fxml", "Borrowing");
+	}
+
 
 	@FXML
     private void onNavMaintentance(ActionEvent event) {

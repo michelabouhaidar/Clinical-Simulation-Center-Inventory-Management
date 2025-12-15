@@ -635,6 +635,12 @@ public class SimulatorsController {
     }
 
 	@FXML
+	private void onNavBorrowing(ActionEvent event) {
+	    ViewUtil.switchScene(event, "/ui/borrowing.fxml", "Borrowing");
+	}
+
+
+	@FXML
     private void onNavMaintentance(ActionEvent event) {
         try {
             ViewUtil.switchScene(event, "/ui/maintenance.fxml", "Maintenance");

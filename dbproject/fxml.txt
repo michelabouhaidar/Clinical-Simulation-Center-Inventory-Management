@@ -135,6 +135,7 @@
 
                 <Button text="Settings"
                         maxWidth="Infinity"
+						onAction="#onNavSettings"
                         style="-fx-background-color: transparent;
                                -fx-text-fill: #f9fafb;
                                -fx-alignment: CENTER_LEFT;
@@ -599,6 +600,7 @@
 
                 <Button text="Settings"
                         maxWidth="Infinity"
+						onAction="#onNavSettings"
                         style="-fx-background-color: transparent;
                                -fx-text-fill: #f9fafb;
                                -fx-alignment: CENTER_LEFT;
@@ -907,6 +909,244 @@
             </children>
         </StackPane>
     </center>
+</BorderPane>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.ui.SettingsController"
+            prefWidth="1200" prefHeight="750"
+            style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
+
+    <!-- ============ HEADER ============ -->
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              spacing="10"
+              style="-fx-padding: 16 32 16 32;">
+            <children>
+                <Label text="LAU"
+                       style="-fx-text-fill: #f9fafb;
+                              -fx-font-size: 22px;
+                              -fx-font-weight: bold;"/>
+
+                <Label text="· Clinical Simulator Center Inventory Management"
+                       style="-fx-text-fill: #d1fae5;
+                              -fx-font-size: 13px;"/>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <Label fx:id="userLabel"
+                       text="Logged in user"
+                       style="-fx-text-fill: #f9fafb;
+                              -fx-font-size: 12px;"/>
+            </children>
+        </HBox>
+    </top>
+
+    <!-- ============ LEFT NAV ============ -->
+    <left>
+        <VBox spacing="8"
+              style="-fx-background-color: #14532d;
+                     -fx-padding: 24 14 24 24;">
+            <children>
+                <Label text="Navigation"
+                       style="-fx-text-fill: #e5e7eb;
+                              -fx-font-size: 12px;
+                              -fx-font-weight: bold;
+                              -fx-padding: 0 0 8 0;"/>
+
+                <Button text="Overview"
+                        onAction="#onNavOverview"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: #f9fafb;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-padding: 8 12 8 12;"/>
+
+                <Button text="Simulators"
+                        onAction="#onNavSimulators"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: #f9fafb;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-padding: 8 12 8 12;"/>
+
+                <Button text="Consumables &amp; Stock"
+                        onAction="#onNavStock"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: #f9fafb;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-padding: 8 12 8 12;"/>
+
+                <Button text="Borrowing"
+                        onAction="#onNavBorrowing"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: #f9fafb;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-padding: 8 12 8 12;"/>
+
+                <Button text="Maintenance"
+                        onAction="#onNavMaintentance"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: #f9fafb;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-padding: 8 12 8 12;"/>
+
+                <Button text="Users"
+                        onAction="#onNavUsers"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: #f9fafb;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-padding: 8 12 8 12;"/>
+
+                <Separator style="-fx-opacity: 0.4; -fx-padding: 8 0 8 0;"/>
+
+                <!-- Settings = ACTIVE -->
+                <Button text="Settings"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: rgba(0,0,0,0.22);
+                               -fx-text-fill: #f9fafb;
+                               -fx-font-weight: bold;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-background-radius: 999;
+                               -fx-padding: 8 12 8 12;"/>
+
+                <Pane VBox.vgrow="ALWAYS"/>
+
+                <Button text="Logout"
+                        onAction="#onLogout"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: #ef4444;
+                               -fx-text-fill: white;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 999;
+                               -fx-padding: 8 12 8 12;"/>
+            </children>
+        </VBox>
+    </left>
+
+    <!-- ============ CENTER CONTENT ============ -->
+    <center>
+        <StackPane>
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="8"/>
+            </padding>
+            <children>
+                <VBox spacing="16"
+                      maxWidth="1000"
+                      style="-fx-background-color: #f9fafb;
+                             -fx-background-radius: 20;
+                             -fx-padding: 24;
+                             -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.24), 22, 0.21, 0, 4);">
+
+                    <!-- Title -->
+                    <VBox spacing="4">
+                        <Label text="Settings"
+                               style="-fx-text-fill: #111827;
+                                      -fx-font-size: 22px;
+                                      -fx-font-weight: bold;"/>
+                        <Label text="Update your profile and password."
+                               style="-fx-text-fill: #6b7280;
+                                      -fx-font-size: 13px;"/>
+                    </VBox>
+
+                    <Separator/>
+
+                    <!-- USER PROFILE -->
+                    <TitledPane text="User profile" expanded="true">
+                        <content>
+                            <VBox spacing="10" style="-fx-padding: 10 4 10 4;">
+                                <GridPane hgap="10" vgap="8">
+                                    <columnConstraints>
+                                        <ColumnConstraints prefWidth="120"/>
+                                        <ColumnConstraints prefWidth="260"/>
+                                    </columnConstraints>
+
+                                    <children>
+                                        <Label text="Full name:" GridPane.rowIndex="0" GridPane.columnIndex="0"
+                                               style="-fx-text-fill: #111827;"/>
+                                        <TextField fx:id="txtFullName"
+                                                   GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                                   promptText="Full name"/>
+
+                                        <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0"
+                                               style="-fx-text-fill: #111827;"/>
+                                        <TextField fx:id="txtEmail"
+                                                   GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                                   promptText="Email"/>
+
+                                        <Label text="Default branch:" GridPane.rowIndex="2" GridPane.columnIndex="0"
+                                               style="-fx-text-fill: #111827;"/>
+                                        <ComboBox fx:id="cbDefaultBranch"
+                                                  GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                                  prefWidth="260"/>
+                                    </children>
+                                </GridPane>
+
+                                <Button text="Save profile"
+                                        onAction="#onSaveProfile"
+                                        style="-fx-background-color: #22c55e;
+                                               -fx-text-fill: white;
+                                               -fx-font-weight: bold;
+                                               -fx-background-radius: 999;
+                                               -fx-padding: 6 16 6 16;"/>
+                            </VBox>
+                        </content>
+                    </TitledPane>
+
+                    <!-- SECURITY / PASSWORD -->
+                    <TitledPane text="Security" expanded="false">
+                        <content>
+                            <VBox spacing="10" style="-fx-padding: 10 4 10 4;">
+                                <PasswordField fx:id="pfCurrentPassword"
+                                               promptText="Current password"
+                                               prefWidth="260"/>
+                                <PasswordField fx:id="pfNewPassword"
+                                               promptText="New password"
+                                               prefWidth="260"/>
+                                <PasswordField fx:id="pfConfirmPassword"
+                                               promptText="Confirm new password"
+                                               prefWidth="260"/>
+
+                                <Button text="Change password"
+                                        onAction="#onChangePassword"
+                                        style="-fx-background-color: #22c55e;
+                                               -fx-text-fill: white;
+                                               -fx-font-weight: bold;
+                                               -fx-background-radius: 999;
+                                               -fx-padding: 6 16 6 16;"/>
+                            </VBox>
+                        </content>
+                    </TitledPane>
+
+                    <Label fx:id="infoLabel"
+                           textFill="red"
+                           wrapText="true"
+                           maxWidth="Infinity"/>
+                </VBox>
+            </children>
+        </StackPane>
+    </center>
+
+    <!-- ============ FOOTER ============ -->
+    <bottom>
+        <HBox alignment="CENTER_RIGHT"
+              style="-fx-padding: 4 24 8 24;">
+            <children>
+                <Label text="LAU · Clinical Simulator Center Inventory"
+                       style="-fx-text-fill: #e5e7eb; -fx-font-size: 11px;"/>
+            </children>
+        </HBox>
+    </bottom>
+
 </BorderPane>
 <?xml version="1.0" encoding="UTF-8"?>
 
@@ -1268,7 +1508,7 @@
 
                 <Button text="Maintenance"
                         maxWidth="Infinity"
-						onAction="#onNavMaintentance"
+                        onAction="#onNavMaintentance"
                         style="-fx-background-color: transparent;
                                -fx-text-fill: #f9fafb;
                                -fx-alignment: CENTER_LEFT;
@@ -1276,13 +1516,14 @@
 
                 <Button text="Users"
                         maxWidth="Infinity"
-						onAction="#onNavUsers"
+                        onAction="#onNavUsers"
                         style="-fx-background-color: transparent;
                                -fx-text-fill: #f9fafb;
                                -fx-alignment: CENTER_LEFT;
                                -fx-padding: 8 12 8 12;"/>
 
-                <Separator style="-fx-opacity: 0.4; -fx-padding: 8 0 8 0;"/>>
+                <!-- ✅ fixed here -->
+                <Separator style="-fx-opacity: 0.4; -fx-padding: 8 0 8 0;"/>
 
                 <Button text="Settings"
                         maxWidth="Infinity"
@@ -1562,7 +1803,6 @@
 
                 <Button text="Users"
                         maxWidth="Infinity"
-						onAction="#onNavUsers"
                         style="-fx-background-color: rgba(0,0,0,0.22);
                                -fx-text-fill: #f9fafb;
                                -fx-font-weight: bold;
@@ -1574,6 +1814,7 @@
 
                 <Button text="Settings"
                         maxWidth="Infinity"
+						onAction="#onNavSettings"
                         style="-fx-background-color: transparent;
                                -fx-text-fill: #f9fafb;
                                -fx-alignment: CENTER_LEFT;
