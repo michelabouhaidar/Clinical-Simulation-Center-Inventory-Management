@@ -10,7 +10,6 @@
             prefWidth="1920" prefHeight="1080"
             style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
 
-    <!-- TOP BAR -->
     <top>
         <HBox alignment="CENTER_LEFT"
               spacing="10"
@@ -35,7 +34,6 @@
         </HBox>
     </top>
 
-    <!-- LEFT NAV -->
     <left>
         <VBox spacing="8"
               style="-fx-background-color: #14532d;
@@ -120,12 +118,7 @@
         </VBox>
     </left>
 
-    <!-- CENTER CONTENT -->
     <center>
-	    <!-- <ScrollPane fitToWidth="true" fitToHeight="true"
-	                style="-fx-background-color: transparent;
-	                       -fx-padding: 12 16 16 8;">
-	        <content> -->
 	            <StackPane>
 	                <padding>
 	                    <Insets top="8" right="8" bottom="8" left="8"/>
@@ -139,7 +132,6 @@
 	                                 -fx-padding: 24;
 	                                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.24), 22, 0.21, 0, 4);">
 	
-	                        <!-- Title -->
 	                        <VBox spacing="4">
 	                            <Label text="Maintenance"
 	                                   style="-fx-text-fill: #111827;
@@ -150,7 +142,6 @@
 	                                          -fx-font-size: 11px;"/>
 	                        </VBox>
 	
-	                        <!-- Search / sort -->
 	                        <HBox spacing="10">
 	                            <TextField fx:id="searchField"
 	                                       promptText="Search by type, vendor, ID, notes, date..."
@@ -171,9 +162,7 @@
 	                                             -fx-background-color: #ffffff;"/>
 	                        </HBox>
 	
-	                        <!-- Main layout: table + actions -->
 	                        <HBox spacing="14">
-	                            <!-- Table -->
 	                            <TableView fx:id="maintenanceTable"
 	                                       prefHeight="520"
 	                                       HBox.hgrow="ALWAYS"
@@ -206,7 +195,6 @@
 	                                </columns>
 	                            </TableView>
 	
-	                            <!-- Actions panel -->
 	                            <VBox spacing="12"
 	                                  prefWidth="240"
 	                                  style="-fx-background-color: #ffffff;
@@ -257,11 +245,9 @@
 	                    </VBox>
 	                </children>
 	            </StackPane>
-	        <!-- </content>
-	    </ScrollPane> -->
+
 	</center>
 
-    <!-- BOTTOM FOOTER -->
     <bottom>
         <HBox alignment="CENTER_RIGHT"
               style="-fx-padding: 4 24 8 24;">

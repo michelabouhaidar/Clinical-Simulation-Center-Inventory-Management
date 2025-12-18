@@ -46,17 +46,14 @@ import javafx.scene.layout.GridPane;
 
 public class BorrowingController {
 
-    /* ===== Header ===== */
     @FXML private Label userLabel;
 
-    /* ===== Filters ===== */
     @FXML private TextField searchField;
     @FXML private ComboBox<String> statusCombo;
     @FXML private ComboBox<Department> deptCombo;
     @FXML private DatePicker dpFrom;
     @FXML private DatePicker dpTo;
 
-    /* ===== Borrowing table ===== */
     @FXML private TableView<Borrowing> borrowTable;
     @FXML private TableColumn<Borrowing, Number> colId;
     @FXML private TableColumn<Borrowing, String> colCode;
@@ -68,7 +65,6 @@ public class BorrowingController {
 
     @FXML private Label borrowMetaLabel;
 
-    /* ===== Details tables ===== */
     @FXML private TableView<BorrowSim> borrowSimsTable;
     @FXML private TableColumn<BorrowSim, String> colSimTag;
     @FXML private TableColumn<BorrowSim, String> colSimModel;
@@ -111,9 +107,6 @@ public class BorrowingController {
         loadBorrowings();
     }
 
-    /* =========================
-     *  NAVIGATION
-     * ========================= */
     @FXML private void onNavOverview(ActionEvent e) { ViewUtil.switchScene(e, "/ui/home.fxml", "Overview"); }
     @FXML private void onNavSimulators(ActionEvent e) { ViewUtil.switchScene(e, "/ui/simulators.fxml", "Simulators"); }
     @FXML private void onNavStock(ActionEvent e) { ViewUtil.switchScene(e, "/ui/stock.fxml", "Consumables & Stock"); }
@@ -137,7 +130,6 @@ public class BorrowingController {
         ViewUtil.switchScene(e, "/ui/login.fxml", "Login");
     }
 
-    /* ========= Filters ========= */
     @FXML private void onSearch(ActionEvent e) { loadBorrowings(); }
 
     @FXML
@@ -149,10 +141,6 @@ public class BorrowingController {
         dpTo.setValue(null);
         loadBorrowings();
     }
-
-    /* ======================
-     *  CORE BUSINESS ACTIONS
-     * ====================== */
 
     @FXML
     private void onNewBorrowing(ActionEvent e) {
@@ -172,7 +160,6 @@ public class BorrowingController {
         dep.setItems(loadDepartments());
         dep.setMaxWidth(Double.MAX_VALUE);
 
-        // IMPORTANT: show department names correctly in this dialog
         dep.setCellFactory(cb -> new ListCell<>() {
             @Override protected void updateItem(Department item, boolean empty) {
                 super.updateItem(item, empty);
@@ -293,7 +280,6 @@ public class BorrowingController {
             list.setItems(FXCollections.observableArrayList(candidates));
             list.setPrefHeight(420);
 
-            // richer info in the popup list
             list.setCellFactory(v -> new ListCell<>() {
                 @Override
                 protected void updateItem(Simulator item, boolean empty) {
@@ -451,8 +437,6 @@ public class BorrowingController {
             int avail = (st.getAvailableQuantity() == null) ? 0 : st.getAvailableQuantity();
             if (qty > avail) { safeRollback(em); warn("Validation", "Quantity exceeds available stock (" + avail + ")."); return; }
 
-            // FIX REQUIRED BY YOU:
-            // Borrowing consumes from AVAILABLE only. RESERVED must NOT be modified here.
             st.setAvailableQuantity(avail - qty);
 
             BorrowCons bc = new BorrowCons();
@@ -660,8 +644,6 @@ public class BorrowingController {
                 Stock st = em.find(Stock.class, bc.getStock().getId());
                 int qty = (bc.getQuantity() == null) ? 0 : bc.getQuantity();
                 if (st != null && qty > 0) {
-                    // FIX REQUIRED BY YOU:
-                    // We never moved anything to RESERVED, so on cancel we restore AVAILABLE only.
                     int av = (st.getAvailableQuantity() == null) ? 0 : st.getAvailableQuantity();
                     st.setAvailableQuantity(av + qty);
                     em.merge(st);
@@ -689,9 +671,6 @@ public class BorrowingController {
         }
     }
 
-    /* ======================
-     *  LOADERS / UI BINDINGS
-     * ====================== */
 
     private void renderUserHeader() {
         LoggedInUser u = AppSession.getCurrentUser();

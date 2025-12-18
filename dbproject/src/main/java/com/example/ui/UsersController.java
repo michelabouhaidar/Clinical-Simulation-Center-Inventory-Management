@@ -80,7 +80,6 @@ public class UsersController {
             userLabel.setText(sb.toString());
         }
 
-        // Access control: only ADMIN
         if (loggedIn == null || loggedIn.getRole() == null ||
             !loggedIn.getRole().equalsIgnoreCase("ADMIN")) {
 
@@ -144,7 +143,6 @@ public class UsersController {
 
         EntityManager em = JPA.em();
         try {
-            // fetch branch to avoid N+1
             TypedQuery<User> q = em.createQuery(
                     "SELECT u FROM User u LEFT JOIN FETCH u.branch ORDER BY u.username",
                     User.class
@@ -225,10 +223,6 @@ public class UsersController {
             }
         });
     }
-
-    // =====================================================
-    // Actions
-    // =====================================================
 
     @FXML
     private void onAddUser() {
@@ -332,7 +326,6 @@ public class UsersController {
 
                 boolean ok = !username.isEmpty() && role != null;
 
-                // STAFF must have branch
                 if ("STAFF".equals(role) && b == null) {
                     ok = false;
                 }
@@ -364,7 +357,6 @@ public class UsersController {
 
             NewUserData form = result.get();
 
-            // Check username uniqueness
             Long countExisting = em.createQuery(
                     "SELECT COUNT(u) FROM User u WHERE u.username = :un", Long.class)
                     .setParameter("un", form.username())
@@ -376,7 +368,6 @@ public class UsersController {
                 return;
             }
 
-            // Generate temp password
             String tempPassword = PasswordUtil.generateStrongPassword(10);
 
             em.getTransaction().begin();
@@ -562,9 +553,6 @@ public class UsersController {
         a.showAndWait();
     }
 
-    // =====================================================
-    // Navigation
-    // =====================================================
 
     @FXML
     private void onNavOverview(ActionEvent event) {

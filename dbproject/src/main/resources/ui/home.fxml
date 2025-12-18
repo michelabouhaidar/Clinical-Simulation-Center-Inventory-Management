@@ -116,10 +116,6 @@
     </left>
 
     <center>
-        <!-- <ScrollPane fitToWidth="true" fitToHeight="true"
-                    style="-fx-background-color: transparent; 
-						   -fx-padding: 8 24 24 8;">
-            <content> -->
                 <StackPane>
                     <padding>
                         <Insets top="8" right="8" bottom="8" left="8"/>
@@ -142,9 +138,7 @@
                                 </children>
                             </HBox>
 
-                            <!-- KPI CARDS: now in a 2x2 layout with icons-like accent -->
                             <HBox spacing="14">
-                                <!-- Total simulators -->
                                 <VBox spacing="6"
                                       HBox.hgrow="ALWAYS"
                                       style="-fx-background-color: #ffffff;
@@ -166,7 +160,6 @@
                                                   -fx-font-size: 11px;"/>
                                 </VBox>
 
-                                <!-- Active borrowings -->
                                 <VBox spacing="6"
                                       HBox.hgrow="ALWAYS"
                                       style="-fx-background-color: #ffffff;
@@ -188,7 +181,6 @@
                                                   -fx-font-size: 11px;"/>
                                 </VBox>
 
-                                <!-- Upcoming calibrations -->
                                 <VBox spacing="6"
                                       HBox.hgrow="ALWAYS"
                                       style="-fx-background-color: #ffffff;
@@ -213,9 +205,7 @@
 
                             <Separator style="-fx-opacity: 0.4;"/>
 
-                            <!-- LOWER SECTION: TWO CARDS STACKED SIDE BY SIDE -->
                             <HBox spacing="16">
-                                <!-- Recent Maintenance -->
                                 <VBox spacing="8" HBox.hgrow="ALWAYS"
                                       style="-fx-background-color: #ffffff;
                                              -fx-background-radius: 14;
@@ -245,7 +235,6 @@
                                     </TableView>
                                 </VBox>
 
-                                <!-- Low stock -->
                                 <VBox spacing="8" HBox.hgrow="ALWAYS"
                                       style="-fx-background-color: #ffffff;
                                              -fx-background-radius: 14;
@@ -275,11 +264,9 @@
                                     </TableView>
                                 </VBox>
                             </HBox>
-                        </VBox>
+            `            </VBox>
                     </children>
-                </StackPane>
-            <!-- </content>
-        </ScrollPane> -->
+                </StackPane>dd
     </center>
 
     <bottom>

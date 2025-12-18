@@ -10,7 +10,6 @@
             prefWidth="1920" prefHeight="1080"
             style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
 
-    <!-- Top header -->
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10"
               style="-fx-padding: 16 32 16 32;">
@@ -33,7 +32,6 @@
         </HBox>
     </top>
 
-    <!-- Left navigation -->
     <left>
         <VBox spacing="8"
               style="-fx-background-color: #14532d;
@@ -70,7 +68,6 @@
                                -fx-alignment: CENTER_LEFT;
                                -fx-padding: 8 12 8 12;"/>
 
-                <!-- Current page (no onAction) -->
                 <Button text="Borrowing"
                         maxWidth="Infinity"
                         style="-fx-background-color: rgba(0,0,0,0.22);
@@ -120,7 +117,6 @@
         </VBox>
     </left>
 
-    <!-- Center content -->
     <center>
         <StackPane>
             <padding>
@@ -135,7 +131,6 @@
                              -fx-padding: 24;
                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.28), 24, 0.18, 0, 6);">
 
-                    <!-- Header -->
                     <HBox alignment="CENTER_LEFT" spacing="12">
                         <VBox spacing="4" HBox.hgrow="ALWAYS">
                             <Label text="Borrowing"
@@ -158,7 +153,6 @@
 
                     <Separator/>
 
-                    <!-- Filters row -->
                     <HBox spacing="10" alignment="CENTER_LEFT">
                         <TextField fx:id="searchField"
                                    promptText="Search by code, notes, department..."
@@ -207,7 +201,6 @@
                                        -fx-padding: 8 14 8 14;"/>
                     </HBox>
 
-                    <!-- Main area -->
                     <HBox spacing="16">
 
                         <VBox spacing="10" HBox.hgrow="ALWAYS">
@@ -234,7 +227,6 @@
                                           -fx-font-size: 12px;"/>
                         </VBox>
 
-                        <!-- Actions panel -->
                         <VBox spacing="12"
                               prefWidth="280"
                               style="-fx-background-color: #ffffff;
@@ -316,7 +308,6 @@
                         </VBox>
                     </HBox>
 
-                    <!-- Details tabs -->
                     <TabPane prefHeight="280">
                         <tabs>
                             <Tab text="Simulators">
@@ -361,7 +352,6 @@
         </StackPane>
     </center>
 
-    <!-- Bottom footer -->
     <bottom>
         <HBox alignment="CENTER_RIGHT"
               style="-fx-padding: 4 24 8 24;">

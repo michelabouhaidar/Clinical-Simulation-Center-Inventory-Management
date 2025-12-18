@@ -67,7 +67,6 @@ public class StockController {
 
     @FXML
     public void initialize() {
-        // Show logged in user
         LoggedInUser u = AppSession.getCurrentUser();
         if (u != null && userLabel != null) {
             StringBuilder sb = new StringBuilder();
@@ -93,7 +92,6 @@ public class StockController {
             userLabel.setText(sb.toString());
         }
 
-        // Table columns
         consColumn.setCellValueFactory(cd ->
                 new SimpleStringProperty(
                         cd.getValue().getConsumable() != null &&
@@ -139,7 +137,6 @@ public class StockController {
                                 : ""
                 ));
 
-        // Wrappers
         filteredData = new FilteredList<>(masterData, s -> true);
         sortedData   = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(stockTable.comparatorProperty());
@@ -333,7 +330,7 @@ public class StockController {
         dialog.setResultConverter(btn -> {
             if (btn == saveButtonType) {
                 int amount = Integer.parseInt(amountField.getText().trim());
-                LocalDate date = countDatePicker.getValue();  // can be null
+                LocalDate date = countDatePicker.getValue();
                 return new TopUpData(amount, date);
             }
             return null;
@@ -341,7 +338,7 @@ public class StockController {
 
         Optional<TopUpData> result = dialog.showAndWait();
         if (result.isEmpty()) {
-            return; // cancelled
+            return;
         }
 
         TopUpData data   = result.get();
@@ -365,7 +362,6 @@ public class StockController {
 
             em.getTransaction().commit();
 
-            // update UI copy
             selected.setAvailableQuantity(currentAvail + toAdd);
             if (newDate != null) {
                 selected.setLastCountDate(newDate);
@@ -456,7 +452,7 @@ public class StockController {
 	    dialog.setResultConverter(btn -> {
 	        if (btn == saveButtonType) {
 	            int amount = Integer.parseInt(amountField.getText().trim());
-	            LocalDate date = countDatePicker.getValue();  // can be null
+	            LocalDate date = countDatePicker.getValue();
 	            return new TopUpData(amount, date);
 	        }
 	        return null;
@@ -464,7 +460,7 @@ public class StockController {
 
 	    Optional<TopUpData> result = dialog.showAndWait();
 	    if (result.isEmpty()) {
-	        return; // cancelled
+	        return;
 	    }
 
 	    TopUpData data   = result.get();
@@ -475,7 +471,6 @@ public class StockController {
 	    try {
 	        em.getTransaction().begin();
 
-	        // Reattach with merge
 	        Stock managed = em.merge(selected);
 
 	        int currentReserved = managed.getReservedQuantity() != null
@@ -489,7 +484,6 @@ public class StockController {
 
 	        em.getTransaction().commit();
 
-	        // update UI copy
 	        selected.setReservedQuantity(currentReserved + toAdd);
 	        if (newDate != null) {
 	            selected.setLastCountDate(newDate);
@@ -599,7 +593,6 @@ public class StockController {
 	    try {
 	        em.getTransaction().begin();
 
-	        // Reattach with merge
 	        Stock managed = em.merge(selected);
 
 	        int currentReserved = managed.getReservedQuantity() != null
@@ -623,7 +616,6 @@ public class StockController {
 
 	        em.getTransaction().commit();
 
-	        // update UI copy
 	        selected.setReservedQuantity(currentReserved - toMove);
 	        selected.setAvailableQuantity(currentAvail + toMove);
 	        if (newDate != null) {
@@ -759,14 +751,12 @@ public class StockController {
                 return;
             }
 
-            // Load branch for current user
             Branch branch = em.createQuery(
                     "SELECT b FROM Branch b WHERE b.name = :name",
                     Branch.class
             ).setParameter("name", u.getBranchName())
              .getSingleResult();
 
-            // Dialog UI
             Dialog<NewStockData> dialog = new Dialog<>();
 
             Window owner = stockTable.getScene() != null
@@ -787,7 +777,6 @@ public class StockController {
             consBox.getSelectionModel().selectFirst();
             consBox.setPrefWidth(260);
 
-            // Friendly display in LOV
             consBox.setCellFactory(cb -> new ListCell<>() {
                 @Override
                 protected void updateItem(Consumable item, boolean empty) {
@@ -898,7 +887,6 @@ public class StockController {
 
             NewStockData data = result.get();
 
-            // Persist new Stock
             em.getTransaction().begin();
 
             Stock s = new Stock();
@@ -911,7 +899,6 @@ public class StockController {
             em.persist(s);
             em.getTransaction().commit();
 
-            // update UI
             masterData.add(s);
             stockTable.refresh();
 

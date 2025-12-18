@@ -43,7 +43,6 @@
                     <children>
                         <StackPane maxWidth="520">
                             <children>
-                                <!-- Glassy background shape -->
                                 <Pane style="-fx-background-color: rgba(15,118,110,0.25);
                                              -fx-background-radius: 32;
                                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 40, 0.3, 0, 10);"

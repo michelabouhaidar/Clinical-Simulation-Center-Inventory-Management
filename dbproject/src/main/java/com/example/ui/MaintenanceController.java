@@ -74,7 +74,6 @@ public class MaintenanceController {
     private FilteredList<Maintenance> filteredData;
     private SortedList<Maintenance>   sortedData;
 
-    // Helper row for detail dialog
     private static class SimStatusRow {
         final Simulator simulator;
         final ComboBox<String> combo;
@@ -85,9 +84,6 @@ public class MaintenanceController {
         }
     }
 
-    // =========================================================
-    // Initialization
-    // =========================================================
     @FXML
     public void initialize() {
         // Show logged-in user
@@ -116,7 +112,6 @@ public class MaintenanceController {
             userLabel.setText(sb.toString());
         }
 
-        // Table columns
         idColumn.setCellValueFactory(cd ->
                 new SimpleStringProperty(
                         cd.getValue().getId() != null
@@ -166,13 +161,11 @@ public class MaintenanceController {
                                 : "0"
                 ));
 
-        // Wrappers
         filteredData = new FilteredList<>(masterData, m -> true);
         sortedData   = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(maintenanceTable.comparatorProperty());
         maintenanceTable.setItems(sortedData);
 
-        // Double-click row to open details (always fresh from DB)
         maintenanceTable.setRowFactory(tv -> {
             TableRow<Maintenance> row = new TableRow<>();
             row.setOnMouseClicked(ev -> {
@@ -191,9 +184,6 @@ public class MaintenanceController {
         loadMaintenance();
     }
 
-    // =========================================================
-    // Data loading & filtering
-    // =========================================================
     private String branchFilter(LoggedInUser user) {
         if (user == null) return null;
         if (user.getRole() != null && user.getRole().equalsIgnoreCase("ADMIN")) {
@@ -306,9 +296,6 @@ public class MaintenanceController {
         });
     }
 
-    // =========================================================
-    // Actions – creation
-    // =========================================================
     @FXML
     private void onAddMaintenance() {
         LoggedInUser u = AppSession.getCurrentUser();
@@ -381,7 +368,6 @@ public class MaintenanceController {
             simList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             simList.setPrefHeight(220);
 
-            // Rich info for each simulator (from SIMULATOR + SIMULATOR_MODEL)
             simList.setCellFactory(list -> new ListCell<>() {
                 @Override
                 protected void updateItem(Simulator s, boolean empty) {
@@ -519,7 +505,6 @@ public class MaintenanceController {
             m.setId(nextId);
             m.setType(data.type());
             m.setEventStartDate(data.startDate());
-            // End date stays null; it will be set when all simulators are returned
 
             String v  = data.vendor() == null ? "" : data.vendor().trim();
             String nt = data.notes()  == null ? "" : data.notes().trim();
@@ -570,9 +555,6 @@ public class MaintenanceController {
             List<Simulator> simulators
     ) {}
 
-    // =========================================================
-    // Actions – detail dialog (returns & end date)
-    // =========================================================
     private void openMaintenanceDetailDialog(Integer maintenanceId) {
         EntityManager em = JPA.em();
         try {
@@ -584,7 +566,6 @@ public class MaintenanceController {
                 return;
             }
 
-            // Force load of associations
             m.getMaintainedItems().size();
 
             final boolean isClosed = (m.getEventEndDate() != null);
@@ -611,7 +592,6 @@ public class MaintenanceController {
 
                 HBox line = new HBox(10);
 
-                // Build rich info block
                 VBox simBox = new VBox(2);
 
                 String tag   = s.getTag() != null ? s.getTag() : "SIM#" + s.getId();
@@ -698,26 +678,24 @@ public class MaintenanceController {
 
             Optional<ButtonType> result = dialog.showAndWait();
             if (isClosed || result.isEmpty()) {
-                return; // closed event is read-only OR user cancelled
+                return;
             }
             if (result.get().getButtonData() != ButtonBar.ButtonData.OK_DONE) {
                 return;
             }
 
-            // Apply changes for open events
             em.getTransaction().begin();
 
             for (SimStatusRow row : rows) {
                 String choice = row.combo.getValue();
                 if (choice == null || "Keep in maintenance".equals(choice)) {
-                    continue; // no change
+                    continue;
                 }
 
                 Simulator managedSim = em.getReference(Simulator.class, row.simulator.getId());
                 managedSim.setStatus(choice);
             }
 
-            // Check if any simulator remains SIM_MAINTENANCE
             Long countStillMaint = em.createQuery(
                     "SELECT COUNT(mt) FROM Maintained mt " +
                     "JOIN mt.simulator s " +
@@ -730,14 +708,12 @@ public class MaintenanceController {
             boolean anyStillMaintenance =
                     (countStillMaint != null && countStillMaint > 0);
 
-            // Only set end date if it is currently null
             if (!anyStillMaintenance && m.getEventEndDate() == null) {
                 m.setEventEndDate(LocalDate.now());
             }
 
             em.getTransaction().commit();
 
-            // Reload fresh data so the next dialog is always correct
             loadMaintenance();
             maintenanceTable.refresh();
 
@@ -763,9 +739,6 @@ public class MaintenanceController {
         }
     }
 
-    // =========================================================
-    // Navigation
-    // =========================================================
     @FXML
     private void onNavOverview(ActionEvent event) {
         try {

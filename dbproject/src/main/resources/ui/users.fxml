@@ -10,7 +10,6 @@
             prefWidth="1920" prefHeight="1080"
             style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
 
-    <!-- TOP BAR -->
     <top>
         <HBox alignment="CENTER_LEFT"
               spacing="10"
@@ -31,7 +30,6 @@
         </HBox>
     </top>
 
-    <!-- LEFT NAV -->
     <left>
         <VBox spacing="8"
               style="-fx-background-color: #14532d;
@@ -116,7 +114,6 @@
         </VBox>
     </left>
 
-    <!-- CENTER: USERS TABLE + ACTIONS -->
     <center>
         <StackPane>
             <padding>
@@ -130,7 +127,6 @@
                              -fx-padding: 24;
                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.24), 22, 0.21, 0, 4);">
 
-                    <!-- Header -->
                     <HBox spacing="4" alignment="CENTER_LEFT">
                         <children>
                             <VBox spacing="4">
@@ -163,7 +159,6 @@
                     </HBox>
 
                     <HBox spacing="16">
-                        <!-- Table -->
                         <VBox spacing="6" HBox.hgrow="ALWAYS">
                             <TableView fx:id="userTable"
                                        prefHeight="420"
@@ -183,7 +178,6 @@
                             </TableView>
                         </VBox>
 
-                        <!-- Actions -->
                         <VBox spacing="10">
                             <Label text="Actions"
                                    style="-fx-text-fill: #111827;
@@ -230,7 +224,6 @@
         </StackPane>
     </center>
 
-	    <!-- BOTTOM FOOTER -->
     <bottom>
         <HBox alignment="CENTER_RIGHT"
               style="-fx-padding: 4 24 8 24;">

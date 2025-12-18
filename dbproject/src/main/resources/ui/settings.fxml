@@ -10,7 +10,6 @@
             prefWidth="1920" prefHeight="1080"
             style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
 
-    <!-- ============ HEADER ============ -->
     <top>
         <HBox alignment="CENTER_LEFT"
               spacing="10"
@@ -35,7 +34,6 @@
         </HBox>
     </top>
 
-    <!-- ============ LEFT NAV ============ -->
     <left>
         <VBox spacing="8"
               style="-fx-background-color: #14532d;
@@ -97,7 +95,6 @@
 
                 <Separator style="-fx-opacity: 0.4; -fx-padding: 8 0 8 0;"/>
 
-                <!-- Settings = ACTIVE -->
                 <Button text="Settings"
                         maxWidth="Infinity"
                         style="-fx-background-color: rgba(0,0,0,0.22);
@@ -121,7 +118,6 @@
         </VBox>
     </left>
 
-    <!-- ============ CENTER CONTENT ============ -->
     <center>
         <StackPane>
             <padding>
@@ -135,7 +131,6 @@
                              -fx-padding: 24;
                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.24), 22, 0.21, 0, 4);">
 
-                    <!-- Title -->
                     <VBox spacing="4">
                         <Label text="Settings"
                                style="-fx-text-fill: #111827;
@@ -148,7 +143,6 @@
 
                     <Separator/>
 
-                    <!-- USER PROFILE -->
                     <TitledPane text="User profile" expanded="true">
                         <content>
                             <VBox spacing="10" style="-fx-padding: 10 4 10 4;">
@@ -190,7 +184,6 @@
                         </content>
                     </TitledPane>
 
-                    <!-- SECURITY / PASSWORD -->
                     <TitledPane text="Security" expanded="false">
                         <content>
                             <VBox spacing="10" style="-fx-padding: 10 4 10 4;">
@@ -224,7 +217,6 @@
         </StackPane>
     </center>
 
-    <!-- ============ FOOTER ============ -->
     <bottom>
         <HBox alignment="CENTER_RIGHT"
               style="-fx-padding: 4 24 8 24;">

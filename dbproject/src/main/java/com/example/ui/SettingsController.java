@@ -20,38 +20,26 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListCell;
 
-/**
- * Controller for settings.fxml.
- * Persists changes to USERS via JPA.
- */
+
 public class SettingsController {
 
-    /* --------- Header --------- */
 
     @FXML private Label userLabel;
 
-    /* --------- Profile section --------- */
 
     @FXML private TextField txtFullName;
     @FXML private TextField txtEmail;
     @FXML private ComboBox<Branch> cbDefaultBranch;
 
-    /* --------- Password section --------- */
 
     @FXML private PasswordField pfCurrentPassword;
     @FXML private PasswordField pfNewPassword;
     @FXML private PasswordField pfConfirmPassword;
 
-    /* --------- Info label --------- */
 
     @FXML private Label infoLabel;
 
-    // cached current DB user (loaded lazily)
     private User dbUser;
-
-    /* =========================================================
-     *  Initialization
-     * ========================================================= */
 
     @FXML
     public void initialize() {
@@ -90,9 +78,7 @@ public class SettingsController {
         userLabel.setText(sb.toString());
     }
 
-    /**
-     * Load all branches and configure ComboBox display.
-     */
+
     private void initBranches() {
         if (cbDefaultBranch == null) return;
 
@@ -141,9 +127,6 @@ public class SettingsController {
         }
     }
 
-    /**
-     * Load the real User entity from DB based on LoggedInUser.username.
-     */
     private void loadUserFromDatabase() {
         LoggedInUser sessionUser = AppSession.getCurrentUser();
         if (sessionUser == null || sessionUser.getUsername() == null) {
@@ -159,7 +142,6 @@ public class SettingsController {
             q.setParameter("uname", sessionUser.getUsername());
             User u = q.getSingleResult();
 
-            // detach or keep reference; we will re-attach with merge when saving
             dbUser = u;
 
         } catch (NoResultException nre) {
@@ -181,7 +163,6 @@ public class SettingsController {
 
     private void initProfileFieldsFromUser() {
         if (dbUser == null) {
-            // fallback from session only
             LoggedInUser u = AppSession.getCurrentUser();
             if (u != null) {
                 if (txtFullName != null) {
@@ -210,7 +191,6 @@ public class SettingsController {
         }
 
         if (cbDefaultBranch != null && dbUser.getBranch() != null) {
-            // select the user's branch in the combo
             for (Branch b : cbDefaultBranch.getItems()) {
                 if (b.getId().equals(dbUser.getBranch().getId())) {
                     cbDefaultBranch.getSelectionModel().select(b);
@@ -219,10 +199,6 @@ public class SettingsController {
             }
         }
     }
-
-    /* =========================================================
-     *  Actions: Profile
-     * ========================================================= */
 
     @FXML
     private void onSaveProfile(ActionEvent event) {
@@ -237,7 +213,6 @@ public class SettingsController {
             return;
         }
 
-        // If we still don't have dbUser, try to load now
         if (dbUser == null) {
             loadUserFromDatabase();
             if (dbUser == null) {
@@ -250,10 +225,8 @@ public class SettingsController {
         try {
             em.getTransaction().begin();
 
-            // re-attach
             User managed = em.merge(dbUser);
 
-            // split fullName into displayName only (you can change this logic if needed)
             managed.setDisplayName(fullName);
             managed.setEmail(email);
             if (branch != null) {
@@ -264,7 +237,6 @@ public class SettingsController {
             em.getTransaction().commit();
             dbUser = managed; // refresh local ref
 
-            // update session object
             LoggedInUser sessionUser = AppSession.getCurrentUser();
             if (sessionUser != null) {
                 sessionUser.setDisplayName(fullName);
@@ -289,10 +261,6 @@ public class SettingsController {
             em.close();
         }
     }
-
-    /* =========================================================
-     *  Actions: Password
-     * ========================================================= */
 
     @FXML
     private void onChangePassword(ActionEvent event) {
@@ -329,8 +297,6 @@ public class SettingsController {
 
             User managed = em.merge(dbUser);
 
-            // verify current password with BCrypt
-            // Make sure you have BCrypt in your dependencies.
             boolean okCurrent;
             if (current == null || current.isEmpty()) {
                 okCurrent = false;
@@ -348,7 +314,6 @@ public class SettingsController {
             String newHash = org.mindrot.jbcrypt.BCrypt.hashpw(
                     neu, org.mindrot.jbcrypt.BCrypt.gensalt(12));
             managed.setPassHash(newHash);
-            // Optionally clear reset flag:
             if (managed.getReset() != null && managed.getReset()) {
                 managed.setReset(false);
             }
@@ -356,7 +321,6 @@ public class SettingsController {
             em.getTransaction().commit();
             dbUser = managed;
 
-            // clear fields
             if (pfCurrentPassword != null) pfCurrentPassword.clear();
             if (pfNewPassword != null) pfNewPassword.clear();
             if (pfConfirmPassword != null) pfConfirmPassword.clear();
@@ -374,10 +338,6 @@ public class SettingsController {
         }
     }
 
-    /* =========================================================
-     *  Helpers
-     * ========================================================= */
-
     private void setInfo(String msg) {
         if (infoLabel != null) {
             infoLabel.setText(msg);
@@ -385,10 +345,6 @@ public class SettingsController {
             System.out.println("[SettingsController] " + msg);
         }
     }
-
-    /* =========================================================
-     *  Navigation
-     * ========================================================= */
 
     @FXML
     private void onNavOverview(ActionEvent event) {
