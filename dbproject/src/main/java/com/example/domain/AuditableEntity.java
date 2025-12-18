@@ -29,8 +29,6 @@ public abstract class AuditableEntity {
     @Column(name = "UPDATED_ON", nullable = false)
     private LocalDateTime updatedOn;
 
-    // ===== Getters & Setters =====
-
     public User getCreatedBy() {
         return createdBy;
     }
@@ -63,18 +61,14 @@ public abstract class AuditableEntity {
         this.updatedOn = updatedOn;
     }
 
-    // ===== JPA lifecycle callbacks =====
-
     @PrePersist
     protected void onCreate() {
         LocalDateTime now = LocalDateTime.now();
 
         LoggedInUser loggedIn = null;
         try {
-            // Use your real AppSession
             loggedIn = AppSession.getCurrentUser();
         } catch (Exception ignored) {
-            // In case AppSession is not initialized for some reason
         }
 
         if (loggedIn != null) {
@@ -108,7 +102,6 @@ public abstract class AuditableEntity {
 
         LoggedInUser loggedIn = null;
         try {
-            // Use your real AppSession
             loggedIn = AppSession.getCurrentUser();
         } catch (Exception ignored) {
         }

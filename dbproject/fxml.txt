@@ -49,7 +49,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.ui.HomeController"
-            prefWidth="1200" prefHeight="750"
+            prefWidth="1920" prefHeight="1080"
             style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
 
     <top>
@@ -340,7 +340,7 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.ui.LoginController"
-            prefWidth="1200" prefHeight="720"
+            prefWidth="1920" prefHeight="1080"
             style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
 
     <!-- Top header bar -->
@@ -508,7 +508,7 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.ui.MaintenanceController"
-            prefWidth="1200" prefHeight="750"
+            prefWidth="1920" prefHeight="1080"
             style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
 
     <!-- TOP BAR -->
@@ -919,7 +919,7 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.ui.SettingsController"
-            prefWidth="1200" prefHeight="750"
+            prefWidth="1920" prefHeight="1080"
             style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
 
     <!-- ============ HEADER ============ -->
@@ -1157,7 +1157,7 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.ui.SimulatorsController"
-            prefWidth="1200" prefHeight="750"
+            prefWidth="1920" prefHeight="1080"
             style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
 
     <top>
@@ -1436,7 +1436,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.ui.StockController"
-            prefWidth="1200" prefHeight="750"
+            prefWidth="1920" prefHeight="1080"
             style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
 
     <top>
@@ -1726,7 +1726,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.ui.UsersController"
-            prefWidth="1200" prefHeight="750"
+            prefWidth="1920" prefHeight="1080"
             style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
 
     <!-- TOP BAR -->

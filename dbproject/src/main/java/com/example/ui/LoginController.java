@@ -61,22 +61,6 @@ public class LoginController {
                 return;
             }
 
-            // First login / no password set
-            // if (u.getPassHash() == null || u.getPassHash().isBlank()) {
-            //     try {
-            //         ViewUtil.switchScene(event, "/ui/set_password.fxml", loader -> {
-            //             SetPasswordController controller =
-            //                     new SetPasswordController(u.getUsername());
-            //             loader.setController(controller);
-            //         });
-            //     } catch (Exception e) {
-            //         e.printStackTrace();
-            //         errorLabel.setText("Failed to open password setup screen.");
-            //     }
-            //     return;
-            // }
-
-            // Password mismatch
             if (!PasswordUtil.verify(password, u.getPassHash())) {
                 errorLabel.setText("Invalid username or password.");
                 passwordField.clear();
@@ -84,7 +68,6 @@ public class LoginController {
                 return;
             }
 
-            // Force reset
             if (Boolean.TRUE.equals(u.getReset())) {
                 try {
                     ViewUtil.switchScene(event, "/ui/set_password.fxml", loader -> {
@@ -99,7 +82,6 @@ public class LoginController {
                 return;
             }
 
-            // Normal login: set session
             AppSession.setCurrentUser(
                     new LoggedInUser(
                             u.getId(),
@@ -111,7 +93,6 @@ public class LoginController {
                     )
             );
 
-            // Go to home
             ViewUtil.switchScene(event, "/ui/home.fxml", "Main Menu");
 
         } catch (Exception ex) {

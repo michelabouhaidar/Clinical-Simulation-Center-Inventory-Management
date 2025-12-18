@@ -1,8 +1,22 @@
 package com.example.domain;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * Bidirectional JPA entity for MAINTENANCE table.
@@ -16,16 +30,10 @@ import java.util.*;
 @Table(name = "MAINTENANCE")
 public class Maintenance extends AuditableEntity {
 
-    // -------------------------------------------------
-    // Primary Key
-    // -------------------------------------------------
     @Id
     @Column(name = "EVENTID", nullable = false)
     private Integer id;
 
-    // -------------------------------------------------
-    // Columns
-    // -------------------------------------------------
     @Column(name = "TYPE", length = 60)
     private String type;
 
@@ -41,16 +49,9 @@ public class Maintenance extends AuditableEntity {
     @Column(name = "VENDOR", length = 60)
     private String vendor;
 
-    // -------------------------------------------------
-    // Association entity (true many-to-many)
-    // -------------------------------------------------
     @OneToMany(mappedBy = "maintenance", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Maintained> maintainedItems = new ArrayList<>();
 
-    // -------------------------------------------------
-    // Read-only convenience view (pure ManyToMany navigation)
-    // NOTE: Do not mutate this set; manage links via Maintained.
-    // -------------------------------------------------
     @ManyToMany
     @JoinTable(
         name = "MAINTAINED",
@@ -59,15 +60,10 @@ public class Maintenance extends AuditableEntity {
     )
     private Set<Simulator> maintainedSimulatorsView = new HashSet<>();
 
-    // -------------------------------------------------
-    // Constructors
-    // -------------------------------------------------
     public Maintenance() {}
     public Maintenance(Integer id) { this.id = id; }
 
-    // -------------------------------------------------
-    // Getters / Setters
-    // -------------------------------------------------
+
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
@@ -88,14 +84,9 @@ public class Maintenance extends AuditableEntity {
 
     public List<Maintained> getMaintainedItems() { return maintainedItems; }
 
-    // Read-only view (unmodifiable)
     public Set<Simulator> getMaintainedSimulatorsView() {
         return Collections.unmodifiableSet(maintainedSimulatorsView);
     }
-
-    // -------------------------------------------------
-    // Sync helpers for association entity
-    // -------------------------------------------------
     public void addMaintained(Maintained m) {
         if (m == null) return;
         if (!maintainedItems.contains(m)) {
@@ -111,9 +102,6 @@ public class Maintenance extends AuditableEntity {
         }
     }
 
-    // -------------------------------------------------
-    // equals / hashCode / toString (by PK)
-    // -------------------------------------------------
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

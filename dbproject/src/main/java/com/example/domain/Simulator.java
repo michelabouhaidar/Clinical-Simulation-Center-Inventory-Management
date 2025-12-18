@@ -21,30 +21,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- * Bidirectional JPA entity for SIMULATOR table.
- * - Many-to-many via link entities:
- *     Simulator ─< BorrowSim >─ Borrowing
- *     Simulator ─< Maintained >─ Maintenance
- * - Read-only ManyToMany "views" (for quick navigation only):
- *     borrowingsView (via BORROW_SIM), maintenancesView (via MAINTAINED)
- * - Auditable fields inherited from AuditableEntity (CREATED_/UPDATED_).
- */
+
 @Entity
 @Table(name = "SIMULATOR")
 public class Simulator extends AuditableEntity {
 
-    // -------------------------------------------------
-    // Primary Key
-    // -------------------------------------------------
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SIMID", nullable = false)
     private Integer id;
 
-    // -------------------------------------------------
-    // Foreign Keys
-    // -------------------------------------------------
     @ManyToOne
     @JoinColumn(name = "BRANCHID", nullable = false)
     private Branch branch;
@@ -53,9 +39,6 @@ public class Simulator extends AuditableEntity {
     @JoinColumn(name = "MODELID", nullable = false)
     private SimulatorModel model;
 
-    // -------------------------------------------------
-    // Columns
-    // -------------------------------------------------
     @Column(name = "TAG", nullable = false, length = 60)
     private String tag;
 
@@ -74,19 +57,12 @@ public class Simulator extends AuditableEntity {
     @Column(name = "NEXTCALDATE")
     private LocalDate nextCalibrationDate;
 
-    // -------------------------------------------------
-    // Association entities (true many-to-many with payload)
-    // -------------------------------------------------
     @OneToMany(mappedBy = "simulator", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BorrowSim> borrowSims = new ArrayList<>();
 
     @OneToMany(mappedBy = "simulator", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Maintained> maintainedEvents = new ArrayList<>();
 
-    // -------------------------------------------------
-    // Read-only convenience views (pure ManyToMany navigation)
-    // NOTE: Do not mutate these sets; manage links via BorrowSim/Maintained.
-    // -------------------------------------------------
     @ManyToMany
     @JoinTable(
         name = "BORROW_SIM",
@@ -103,15 +79,9 @@ public class Simulator extends AuditableEntity {
     )
     private Set<Maintenance> maintenancesView = new HashSet<>();
 
-    // -------------------------------------------------
-    // Constructors
-    // -------------------------------------------------
     public Simulator() {}
     public Simulator(Integer id) { this.id = id; }
 
-    // -------------------------------------------------
-    // Getters / Setters
-    // -------------------------------------------------
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
@@ -142,13 +112,9 @@ public class Simulator extends AuditableEntity {
     public List<BorrowSim> getBorrowSims() { return borrowSims; }
     public List<Maintained> getMaintainedEvents() { return maintainedEvents; }
 
-    // Read-only views (unmodifiable)
     public Set<Borrowing> getBorrowingsView() { return Collections.unmodifiableSet(borrowingsView); }
     public Set<Maintenance> getMaintenancesView() { return Collections.unmodifiableSet(maintenancesView); }
 
-    // -------------------------------------------------
-    // Sync helpers for association entities
-    // -------------------------------------------------
     public void addBorrowSim(BorrowSim bs) {
         if (bs == null) return;
         if (!borrowSims.contains(bs)) {
@@ -176,10 +142,7 @@ public class Simulator extends AuditableEntity {
             m.setSimulator(null);
         }
     }
-
-    // -------------------------------------------------
-    // equals / hashCode / toString (by PK)
-    // -------------------------------------------------
+	
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

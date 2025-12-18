@@ -7,7 +7,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.ui.HomeController"
-            prefWidth="1200" prefHeight="750"
+            prefWidth="1920" prefHeight="1080"
             style="-fx-background-color: linear-gradient(to bottom right, #14532d, #22c55e);">
 
     <top>
@@ -116,10 +116,7 @@
     </left>
 
     <center>
-        <!-- <ScrollPane fitToWidth="true" fitToHeight="true"
-                    style="-fx-background-color: transparent; 
-						   -fx-padding: 8 24 24 8;">
-            <content> -->
+
                 <StackPane>
                     <padding>
                         <Insets top="8" right="8" bottom="8" left="8"/>
@@ -142,9 +139,7 @@
                                 </children>
                             </HBox>
 
-                            <!-- KPI CARDS: now in a 2x2 layout with icons-like accent -->
                             <HBox spacing="14">
-                                <!-- Total simulators -->
                                 <VBox spacing="6"
                                       HBox.hgrow="ALWAYS"
                                       style="-fx-background-color: #ffffff;
@@ -166,7 +161,6 @@
                                                   -fx-font-size: 11px;"/>
                                 </VBox>
 
-                                <!-- Active borrowings -->
                                 <VBox spacing="6"
                                       HBox.hgrow="ALWAYS"
                                       style="-fx-background-color: #ffffff;
@@ -188,7 +182,6 @@
                                                   -fx-font-size: 11px;"/>
                                 </VBox>
 
-                                <!-- Upcoming calibrations -->
                                 <VBox spacing="6"
                                       HBox.hgrow="ALWAYS"
                                       style="-fx-background-color: #ffffff;
@@ -213,9 +206,7 @@
 
                             <Separator style="-fx-opacity: 0.4;"/>
 
-                            <!-- LOWER SECTION: TWO CARDS STACKED SIDE BY SIDE -->
                             <HBox spacing="16">
-                                <!-- Recent Maintenance -->
                                 <VBox spacing="8" HBox.hgrow="ALWAYS"
                                       style="-fx-background-color: #ffffff;
                                              -fx-background-radius: 14;
@@ -245,7 +236,6 @@
                                     </TableView>
                                 </VBox>
 
-                                <!-- Low stock -->
                                 <VBox spacing="8" HBox.hgrow="ALWAYS"
                                       style="-fx-background-color: #ffffff;
                                              -fx-background-radius: 14;
@@ -278,8 +268,6 @@
                         </VBox>
                     </children>
                 </StackPane>
-            <!-- </content>
-        </ScrollPane> -->
     </center>
 
     <bottom>

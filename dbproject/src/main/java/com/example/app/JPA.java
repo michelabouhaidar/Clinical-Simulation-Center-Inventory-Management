@@ -8,7 +8,6 @@ public final class JPA {
     private static EntityManagerFactory emf;
 
     static {
-        // Use the name from your persistence.xml
         emf = Persistence.createEntityManagerFactory("dbprojectPU");
     }
 

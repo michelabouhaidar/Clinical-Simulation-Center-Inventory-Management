@@ -33,7 +33,6 @@ public class Stock extends AuditableEntity {
     @Column(name = "RESERVEDQ")   private Integer reservedQuantity;
     @Column(name = "LASTCOUNTDATE") private LocalDate lastCountDate;
 
-    // Many-to-many via link entity BorrowCons
     @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BorrowCons> borrowConsList = new ArrayList<>();
 

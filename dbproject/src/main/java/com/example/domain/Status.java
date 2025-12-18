@@ -2,7 +2,7 @@ package com.example.domain;
 
 public final class Status {
 
-    private Status() {} // utility class
+    private Status() {}
 
     public static final String SIM_AVAILABLE      = "AVAILABLE";
     public static final String SIM_BORROWED       = "BORROWED";

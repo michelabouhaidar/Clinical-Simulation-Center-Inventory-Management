@@ -62,7 +62,6 @@ public class SimulatorsController {
     private final DateTimeFormatter dateFmt =
             DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    // backing list for the table + filtering/sorting wrappers
     private final ObservableList<Simulator> masterData =
             FXCollections.observableArrayList();
     private FilteredList<Simulator> filteredData;
@@ -70,7 +69,6 @@ public class SimulatorsController {
 
     @FXML
     public void initialize() {
-        // Show logged-in user
         LoggedInUser u = AppSession.getCurrentUser();
         if (u != null && userLabel != null) {
             StringBuilder sb = new StringBuilder();
@@ -145,7 +143,6 @@ public class SimulatorsController {
                                 : ""
                 ));
 
-        // Wrap master data with Filtered + Sorted lists
         filteredData = new FilteredList<>(masterData, s -> true);
         sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(simulatorTable.comparatorProperty());
@@ -157,7 +154,6 @@ public class SimulatorsController {
         loadSimulators();
     }
 
-    /** Load simulators from DB (filtered by user's branch if not admin). */
     private void loadSimulators() {
         LoggedInUser u = AppSession.getCurrentUser();
 
@@ -172,7 +168,6 @@ public class SimulatorsController {
                       !u.getRole().equalsIgnoreCase("ADMIN")));
 
             if (filterByBranch) {
-                // Non-admin: only their own branch
                 jpql += " WHERE s.branch.name = :branchName";
             }
 
@@ -190,7 +185,7 @@ public class SimulatorsController {
                 if (sims.isEmpty()) {
                     infoLabel.setText("No simulators found for your branch.");
                 } else {
-                    infoLabel.setText("");  // clear
+                    infoLabel.setText("");
                 }
             }
         } catch (Exception e) {
@@ -203,7 +198,6 @@ public class SimulatorsController {
         }
     }
 
-    /** Live search on main fields. */
     private void setupSearch() {
         if (searchField == null) return;
 
@@ -240,7 +234,6 @@ public class SimulatorsController {
         });
     }
 
-    /** Sort combo that drives TableView sort order. */
     private void setupSortCombo() {
         if (sortByCombo == null) return;
 
@@ -272,9 +265,6 @@ public class SimulatorsController {
         });
     }
 
-    // -------- Actions from right panel --------
-
-    /** Mark selected simulator as OUT OF SERVICE. */
 	@FXML
 	private void onMarkOutOfService() {
 	    Simulator selected = simulatorTable.getSelectionModel().getSelectedItem();
@@ -288,18 +278,14 @@ public class SimulatorsController {
 	    try {
 	        em.getTransaction().begin();
 
-	        // Re-attach the entity from DB (managed instance)
 	        Simulator managed = em.merge(selected);
 
-	        // Change the mapped field
 	        managed.setStatus(Status.SIM_OUT_OF_SERVICE);
 
-	        // Force SQL generation *now* (before commit)
 	        em.flush();
 
 	        em.getTransaction().commit();
 
-	        // Reload table from DB so UI reflects real state
 	        loadSimulators();
 
 	        if (infoLabel != null)
@@ -326,7 +312,6 @@ public class SimulatorsController {
 
         EntityManager em = JPA.em();
         try {
-            // 1) Load ALL models (no branch filter)
             List<SimulatorModel> models = em.createQuery(
                     "SELECT m FROM SimulatorModel m ORDER BY m.modelName",
                     SimulatorModel.class
@@ -338,7 +323,6 @@ public class SimulatorsController {
                 return;
             }
 
-            // 2) Dialog with SIMULATOR fields
             Dialog<Simulator> dialog = new Dialog<>();
 
             Window owner = simulatorTable.getScene() != null
@@ -358,7 +342,7 @@ public class SimulatorsController {
             ComboBox<SimulatorModel> modelBox = new ComboBox<>();
             modelBox.getItems().addAll(models);
             modelBox.setPrefWidth(260);
-            modelBox.getSelectionModel().selectFirst(); // default
+            modelBox.getSelectionModel().selectFirst();
 
             TextField tagField = new TextField();
             tagField.setPromptText("Tag (required)");
@@ -395,7 +379,6 @@ public class SimulatorsController {
 
             dialog.getDialogPane().setContent(grid);
 
-            // Disable Save until required fields are present
             Node saveButton = dialog.getDialogPane().lookupButton(saveButtonType);
             saveButton.setDisable(true);
 
@@ -425,10 +408,9 @@ public class SimulatorsController {
                     String notes = condNotesField.getText() == null ? "" : condNotesField.getText().trim();
                     s.setConditionNotes(notes.isEmpty() ? null : notes);
 
-                    LocalDate ncd = nextCalPicker.getValue();   // optional
+                    LocalDate ncd = nextCalPicker.getValue();
                     s.setNextCalibrationDate(ncd);
 
-                    // Default status
                     s.setStatus(Status.SIM_AVAILABLE);
                     return s;
                 }
@@ -437,15 +419,13 @@ public class SimulatorsController {
 
             Optional<Simulator> result = dialog.showAndWait();
             if (result.isEmpty()) {
-                return; // cancelled
+                return;
             }
 
             Simulator formSim = result.get();
 
-            // 3) Persist to DB
             em.getTransaction().begin();
 
-            // get branch entity for current user
             Branch branch = em.createQuery(
                     "SELECT b FROM Branch b WHERE b.name = :name",
                     Branch.class
@@ -460,7 +440,6 @@ public class SimulatorsController {
             s.setSerialNumber(formSim.getSerialNumber());
             s.setConditionNotes(formSim.getConditionNotes());
             s.setNextCalibrationDate(formSim.getNextCalibrationDate());
-            // CALDATE can stay null for a new simulator
 
             em.persist(s);
             em.getTransaction().commit();
@@ -481,13 +460,7 @@ public class SimulatorsController {
         }
     }
 
-    /**
-     * Add a new SIMULATOR_MODEL.
-     *
-     * Business rule:
-     *   - MODEL NAME, SPECS, and MAXDAYS are mandatory.
-     *   - CALREQ is optional (checkbox).
-     */
+
     @FXML
     private void onAddModel() {
         Dialog<SimulatorModel> dialog = new Dialog<>();
@@ -542,7 +515,6 @@ public class SimulatorsController {
         Node saveButton = dialog.getDialogPane().lookupButton(saveButtonType);
         saveButton.setDisable(true);
 
-        // Enforce: MODELNAME, SPECS and MAXDAYS (valid int) are mandatory
         Runnable validate = () -> {
             String name  = nameField.getText()  == null ? "" : nameField.getText().trim();
             String specs = specsField.getText() == null ? "" : specsField.getText().trim();
@@ -575,7 +547,7 @@ public class SimulatorsController {
                 m.setCalReq(calReqBox.isSelected());
 
                 String maxText = maxDaysField.getText().trim();
-                m.setMaxDays(Integer.parseInt(maxText));  // safe thanks to validate()
+                m.setMaxDays(Integer.parseInt(maxText));
 
                 return m;
             }

@@ -24,7 +24,6 @@ public class SetPasswordController {
     private final String username;
     private final UserRepository repo = new UserRepository();
 
-    // Injected from LoginController
     public SetPasswordController(String username) {
         this.username = username;
     }
@@ -69,7 +68,6 @@ public class SetPasswordController {
                 return;
             }
 
-            // Set new password + flags
             u.setPassHash(PasswordUtil.hash(p1));
             u.setReset(Boolean.FALSE);
             if (u.getIsActive() == null) {
@@ -79,7 +77,6 @@ public class SetPasswordController {
             repo.save(em, u);
             em.getTransaction().commit();
 
-            // Put this user into the global session
             AppSession.setCurrentUser(
                     new LoggedInUser(
                             u.getId(),
@@ -91,7 +88,6 @@ public class SetPasswordController {
                     )
             );
 
-            // Go to Home using SAME Stage
             ViewUtil.switchScene(event, "/ui/home.fxml", "Main Menu");
 
         } catch (Exception ex) {

@@ -16,7 +16,6 @@ import javax.persistence.Table;
 @Table(name = "BORROW_CONS")
 public class BorrowCons {
 
-    // ============ Composite primary key: (BORROWID, STOCKID) ============
     @Embeddable
     public static class Id implements Serializable {
 
@@ -58,12 +57,12 @@ public class BorrowCons {
     private Id id = new Id();
 
     @ManyToOne
-    @MapsId("borrowId")               // maps BORROWID part of PK
+    @MapsId("borrowId")
     @JoinColumn(name = "BORROWID", nullable = false)
     private Borrowing borrowing;
 
     @ManyToOne
-    @MapsId("stockId")                // maps STOCKID part of PK
+    @MapsId("stockId")
     @JoinColumn(name = "STOCKID", nullable = false)
     private Stock stock;
 
@@ -77,7 +76,6 @@ public class BorrowCons {
         setStock(stock);
     }
 
-    // ----- getters/setters -----
 
     public Id getId() { return id; }
     public void setId(Id id) { this.id = id; }

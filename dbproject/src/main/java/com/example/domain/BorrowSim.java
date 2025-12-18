@@ -16,7 +16,6 @@ import javax.persistence.Table;
 @Table(name = "BORROW_SIM")
 public class BorrowSim {
 
-    // ============ Composite primary key: (SIMID, BORROWID) ============
     @Embeddable
     public static class Id implements Serializable {
 

@@ -17,7 +17,6 @@ import javax.persistence.Table;
 @Table(name = "MAINTAINED")
 public class Maintained {
 
-    // ============ Composite primary key: (SIMID, EVENTID) ============
     @Embeddable
     public static class Id implements Serializable {
 
@@ -59,12 +58,12 @@ public class Maintained {
     private Id id = new Id();
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @MapsId("eventId")                      // EVENTID part of PK
+    @MapsId("eventId")
     @JoinColumn(name = "EVENTID", nullable = false)
     private Maintenance maintenance;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @MapsId("simId")                        // SIMID part of PK
+    @MapsId("simId")
     @JoinColumn(name = "SIMID", nullable = false)
     private Simulator simulator;
 

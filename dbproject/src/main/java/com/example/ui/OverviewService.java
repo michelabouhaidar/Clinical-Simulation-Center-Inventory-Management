@@ -11,22 +11,18 @@ import com.example.session.LoggedInUser;
 
 public class OverviewService {
 
-    /**
-     * If user is ADMIN -> null (no branch filter).
-     * Otherwise -> user's branch name (Beirut / Byblos).
-     */
+
     private String branchFilter(LoggedInUser user) {
         if (user == null) return null;
         if (user.getRole() != null && user.getRole().equalsIgnoreCase("ADMIN")) {
-            return null;        // ADMIN sees everything
+            return null;
         }
-        return user.getBranchName();      // Beirut or Byblos
+        return user.getBranchName();
     }
 
     public OverviewStats loadStats(EntityManager em, LoggedInUser user) {
         String branch = branchFilter(user);
 
-        // 1) Total simulators (only AVAILABLE)
 		TypedQuery<Long> q1 = em.createQuery(
 		        "SELECT COUNT(s) FROM Simulator s " +
 		        "WHERE s.status = :availStatus " +
@@ -37,7 +33,6 @@ public class OverviewService {
 		long totalSims = q1.getSingleResult();
 
 
-        // 2) Active borrowings (ACTIVE + PARTIALLY_RETURNED)
         TypedQuery<Long> q2 = em.createQuery(
                 "SELECT COUNT(b) FROM Borrowing b " +
                 "WHERE b.status IN (:s1, :s2) " +
@@ -48,7 +43,6 @@ public class OverviewService {
         q2.setParameter("branch", branch);
         long activeBorrows = q2.getSingleResult();
 
-        // 3) Upcoming calibrations (next 30 days)
         LocalDate today = LocalDate.now();
         LocalDate limit = today.plusDays(30);
 
@@ -79,14 +73,12 @@ public class OverviewService {
             MaintenanceRow.class
         );
         q.setParameter("branch", branch);
-        //q.setMaxResults(10);
         return q.getResultList();
     }
 
     public List<LowStockRow> loadLowStock(EntityManager em, LoggedInUser user) {
         String branch = branchFilter(user);
 
-        // THRESHOLD: tweak as you like (<= 5 units now)
         int threshold = 5;
 
         TypedQuery<LowStockRow> q = em.createQuery(
@@ -103,7 +95,6 @@ public class OverviewService {
         );
         q.setParameter("branch", branch);
         q.setParameter("th", threshold);
-        //q.setMaxResults(10);
         return q.getResultList();
     }
 }

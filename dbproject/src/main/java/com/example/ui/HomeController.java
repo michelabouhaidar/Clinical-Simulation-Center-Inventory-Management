@@ -45,7 +45,6 @@ public class HomeController {
 
     @FXML
     public void initialize() {
-        // 1) Show logged-in user info in top-right
         LoggedInUser u = AppSession.getCurrentUser();
         if (u != null && userLabel != null) {
             StringBuilder sb = new StringBuilder();
@@ -71,7 +70,6 @@ public class HomeController {
             userLabel.setText(sb.toString());
         }
 
-        // 2) Configure table columns
         if (maintDateCol != null)   maintDateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         if (maintSimCol != null)    maintSimCol.setCellValueFactory(new PropertyValueFactory<>("simulator"));
         if (maintTypeCol != null)   maintTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -82,7 +80,6 @@ public class HomeController {
         if (stockAvailCol != null)  stockAvailCol.setCellValueFactory(new PropertyValueFactory<>("available"));
         if (stockResCol != null)    stockResCol.setCellValueFactory(new PropertyValueFactory<>("reserved"));
 
-        // 3) Load data from DB for this user
         loadOverviewData();
     }
 
@@ -92,7 +89,6 @@ public class HomeController {
 
         EntityManager em = JPA.em();
         try {
-            // Top cards
             OverviewStats stats = overviewService.loadStats(em, u);
             if (totalSimulatorsLabel != null)
                 totalSimulatorsLabel.setText(String.valueOf(stats.getTotalSimulators()));
@@ -101,7 +97,6 @@ public class HomeController {
             if (upcomingCalibrationsLabel != null)
                 upcomingCalibrationsLabel.setText(String.valueOf(stats.getUpcomingCalibrations()));
 
-            // Tables
             if (maintenanceTable != null) {
                 maintenanceTable.getItems().setAll(
                         overviewService.loadRecentMaintenance(em, u)
@@ -114,7 +109,7 @@ public class HomeController {
                 );
             }
         } catch (Exception ex) {
-            ex.printStackTrace(); // or show a small error label somewhere
+            ex.printStackTrace();
         } finally {
             em.close();
         }

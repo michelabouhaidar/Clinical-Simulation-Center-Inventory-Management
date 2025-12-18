@@ -37,12 +37,10 @@ public class User {
     @Column(name = "USERMAIL", length = 120)
     private String email;
 
-    // FK → BRANCH.BranchID
     @ManyToOne
     @JoinColumn(name = "BranchID")
     private Branch branch;
 
-    // reset tinyint(1) NOT NULL
     @Column(name = "reset", nullable = false)
     private Boolean reset;
 
