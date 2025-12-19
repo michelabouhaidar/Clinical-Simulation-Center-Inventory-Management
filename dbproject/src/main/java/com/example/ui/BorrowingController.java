@@ -279,6 +279,7 @@ public class BorrowingController {
             list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             list.setItems(FXCollections.observableArrayList(candidates));
             list.setPrefHeight(420);
+			list.setPrefWidth(600);
 
             list.setCellFactory(v -> new ListCell<>() {
                 @Override

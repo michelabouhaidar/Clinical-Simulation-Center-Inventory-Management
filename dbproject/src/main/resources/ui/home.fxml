@@ -264,9 +264,9 @@
                                     </TableView>
                                 </VBox>
                             </HBox>
-            `            </VBox>
+                        </VBox>
                     </children>
-                </StackPane>dd
+                </StackPane>
     </center>
 
     <bottom>

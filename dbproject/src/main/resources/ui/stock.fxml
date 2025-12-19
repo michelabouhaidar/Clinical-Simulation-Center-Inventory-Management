@@ -98,6 +98,7 @@
 
                 <Button text="Settings"
                         maxWidth="Infinity"
+						onAction="#onNavSettings"
                         style="-fx-background-color: transparent;
                                -fx-text-fill: #f9fafb;
                                -fx-alignment: CENTER_LEFT;
